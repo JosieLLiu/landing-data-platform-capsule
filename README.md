@@ -5,6 +5,15 @@
 
 - `index.html`：站点入口文件
 
+## 上传到 GitHub Pages
+
+请将以下文件一起上传到仓库根目录：
+
+- `index.html`
+- `ws_logo.png`
+
+如果后续只修改页面内容，通常更新 `index.html` 即可；如果更换公司 logo，也需要同步更新 `ws_logo.png`。
+
 ## GitHub Pages 最短路径
 
 1. 新建一个 GitHub 仓库
