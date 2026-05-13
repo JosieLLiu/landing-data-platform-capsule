@@ -6,7 +6,7 @@
 <title>数据平台星图 - Capsule</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;800&family=Space+Grotesk:wght@300;400;500;600;700&family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after {
     margin: 0;
@@ -28,14 +28,16 @@
     --outline: #1E1E1E;
     --shadow: rgba(26, 26, 26, 0.08);
     --shadow-strong: rgba(26, 26, 26, 0.15);
-    --font-display: "Bodoni Moda", serif;
-    --font-body: "Space Grotesk", sans-serif;
+    --font-display: "ZCOOL KuaiLe", "Noto Sans SC", sans-serif;
+    --font-body: "Noto Sans SC", "Space Grotesk", sans-serif;
   }
 
   html, body {
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    min-width: 1180px;
+    min-height: 720px;
+    overflow: auto;
     background: var(--bg);
     font-family: var(--font-body);
     color: var(--fg);
@@ -70,6 +72,8 @@
   .presentation {
     width: 100%;
     height: 100%;
+    min-width: 1180px;
+    min-height: 720px;
     position: relative;
     z-index: 2;
   }
@@ -79,6 +83,8 @@
     inset: 0;
     width: 100%;
     height: 100%;
+    min-width: 1180px;
+    min-height: 720px;
     display: flex;
     flex-direction: column;
     padding: 3rem 4rem;
@@ -166,14 +172,115 @@
     z-index: 25;
   }
 
+  .page-turn-tip {
+    position: fixed;
+    right: 3.35rem;
+    top: calc(50% + 11px);
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.72rem;
+    border-radius: 9999px;
+    border: 1.5px solid rgba(26, 26, 26, 0.28);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(8px);
+    box-shadow: 5px 5px 0 rgba(26, 26, 26, 0.05);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(26, 26, 26, 0.48);
+    line-height: 1.35;
+    z-index: 26;
+    pointer-events: none;
+    animation: tipPulse 2.8s ease-in-out infinite;
+  }
+
+  .page-turn-tip::after {
+    content: "";
+    position: absolute;
+    right: -0.72rem;
+    top: 50%;
+    width: 0.64rem;
+    height: 1.5px;
+    background: rgba(26, 26, 26, 0.32);
+    transform: rotate(12deg);
+    transform-origin: left center;
+  }
+
   .slide-1 {
     justify-content: center;
     align-items: center;
     background:
-      radial-gradient(ellipse at 18% 82%, rgba(200, 217, 78, 0.16) 0%, transparent 44%),
-      radial-gradient(ellipse at 82% 18%, rgba(139, 180, 247, 0.12) 0%, transparent 44%),
-      radial-gradient(ellipse at 50% 50%, rgba(245, 184, 149, 0.08) 0%, transparent 55%),
+      radial-gradient(ellipse at 18% 82%, rgba(200, 217, 78, 0.20) 0%, transparent 42%),
+      radial-gradient(ellipse at 82% 18%, rgba(139, 180, 247, 0.18) 0%, transparent 42%),
+      radial-gradient(ellipse at 50% 50%, rgba(245, 184, 149, 0.10) 0%, transparent 54%),
+      radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0) 32%),
       var(--bg);
+  }
+
+  .slide-1::before,
+  .slide-1::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    border: 2px dashed rgba(26, 26, 26, 0.18);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .slide-1::before {
+    width: min(64vw, 740px);
+    height: min(64vw, 740px);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .slide-1::after {
+    width: min(48vw, 560px);
+    height: min(48vw, 560px);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(10deg);
+    border-color: rgba(26, 26, 26, 0.12);
+  }
+
+  .orbit-ring {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-radius: 50%;
+    border: 2px solid rgba(26, 26, 26, 0.10);
+    pointer-events: none;
+    z-index: 1;
+    --orbit-base: 0deg;
+    animation: orbitSpin 22s linear infinite;
+  }
+
+  .orbit-ring.ring-a {
+    width: min(74vw, 860px);
+    height: min(54vw, 620px);
+    --orbit-base: -10deg;
+  }
+
+  .orbit-ring.ring-b {
+    width: min(56vw, 640px);
+    height: min(30vw, 350px);
+    --orbit-base: 16deg;
+    border-style: dashed;
+    border-color: rgba(139, 180, 247, 0.26);
+    animation-duration: 28s;
+    animation-direction: reverse;
+  }
+
+  .orbit-ring.ring-c {
+    width: min(42vw, 500px);
+    height: min(62vw, 740px);
+    --orbit-base: 34deg;
+    border-color: rgba(160, 108, 232, 0.18);
+    animation-duration: 32s;
   }
 
   .deco-pills {
@@ -192,53 +299,207 @@
     justify-content: center;
     font-weight: 700;
     box-shadow: 6px 6px 0 var(--shadow);
+    animation: floatDrift 8s ease-in-out infinite;
+  }
+
+  .deco-pill::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    top: 10px;
+    left: 14px;
+    pointer-events: none;
   }
 
   .title-pill {
     position: relative;
     z-index: 2;
-    background: var(--yellow);
-    padding: 1.2rem 2.6rem;
+    background: var(--sky);
+    padding: 1rem 2.2rem;
     border-radius: 9999px;
     border: 2px solid var(--outline);
     margin-bottom: 1.8rem;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     font-weight: 700;
+    box-shadow: 8px 8px 0 var(--shadow);
   }
 
   .main-title {
     position: relative;
     z-index: 2;
     font-family: var(--font-display);
-    font-size: clamp(3rem, 8vw, 6.8rem);
-    line-height: 0.9;
-    letter-spacing: -0.02em;
+    font-size: clamp(3rem, 7vw, 5.8rem);
+    line-height: 1.02;
+    letter-spacing: 0;
     text-align: center;
     max-width: 10ch;
+    background: linear-gradient(135deg, #1a1a1a 8%, #4059cf 50%, #7b6bd6 92%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 10px 22px rgba(139, 180, 247, 0.16));
   }
 
   .main-title .subtitle {
     display: block;
     font-family: var(--font-body);
-    font-size: clamp(0.82rem, 1.3vw, 1rem);
-    font-weight: 400;
+    font-size: clamp(0.86rem, 1.3vw, 1rem);
+    font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    margin-top: 1.5rem;
-    color: rgba(26, 26, 26, 0.58);
+    margin-top: 1.35rem;
+    color: rgba(26, 26, 26, 0.64);
   }
 
   .cover-note {
     position: relative;
     z-index: 2;
-    margin-top: 2rem;
-    max-width: 34rem;
-    text-align: center;
-    font-size: 0.98rem;
-    line-height: 1.7;
-    color: rgba(26, 26, 26, 0.66);
+    display: none;
+  }
+
+  .cover-explore {
+    position: relative;
+    z-index: 2;
+    margin-top: 1.55rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.92rem 1.35rem;
+    border-radius: 9999px;
+    border: 2px solid var(--outline);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 8px 8px 0 var(--shadow);
+    font-size: 0.84rem;
+    letter-spacing: 0.06em;
+    color: rgba(26, 26, 26, 0.78);
+    animation: floatDrift 7s ease-in-out infinite;
+  }
+
+  .cover-explore .spark {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--yellow);
+    border: 2px solid var(--outline);
+    flex-shrink: 0;
+  }
+
+  .star-trace {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 18px rgba(255, 255, 255, 0.75);
+    animation: starBlink 3.6s ease-in-out infinite;
+  }
+
+  .star-trace.s1 { width: 8px; height: 8px; top: 18%; left: 30%; }
+  .star-trace.s2 { width: 6px; height: 6px; top: 28%; right: 24%; animation-delay: 1s; }
+  .star-trace.s3 { width: 10px; height: 10px; bottom: 26%; left: 28%; animation-delay: 0.8s; }
+  .star-trace.s4 { width: 7px; height: 7px; bottom: 18%; right: 30%; animation-delay: 1.4s; }
+  .star-trace.s5 { width: 5px; height: 5px; top: 48%; left: 18%; animation-delay: 2s; }
+  .star-trace.s6 { width: 5px; height: 5px; top: 52%; right: 18%; animation-delay: 2.4s; }
+
+  .brand-badge {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.72rem 0.92rem;
+    border-radius: 1.2rem;
+    border: 1.5px solid rgba(26, 26, 26, 0.18);
+    background: rgba(255, 255, 255, 0.68);
+    backdrop-filter: blur(10px);
+    box-shadow: 8px 8px 0 rgba(26, 26, 26, 0.05);
+  }
+
+  .brand-logo {
+    display: block;
+    width: 138px;
+    height: auto;
+  }
+
+  .brand-mark {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+  }
+
+  .brand-mark::before,
+  .brand-mark::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    transform: rotate(45deg);
+  }
+
+  .brand-mark::before {
+    left: 2px;
+    top: 6px;
+    background: linear-gradient(135deg, #8BB4F7, #6a7fe2);
+    border: 1.5px solid rgba(26, 26, 26, 0.12);
+  }
+
+  .brand-mark::after {
+    right: 2px;
+    top: 6px;
+    background: linear-gradient(135deg, #C5B5E0, #8BB4F7);
+    border: 1.5px solid rgba(26, 26, 26, 0.12);
+  }
+
+  .brand-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.12rem;
+    text-align: left;
+  }
+
+  .brand-copy strong {
+    font-size: 0.82rem;
+    line-height: 1;
+    letter-spacing: 0.1em;
+    font-weight: 800;
+    color: rgba(26, 26, 26, 0.8);
+  }
+
+  .brand-copy span {
+    font-size: 0.58rem;
+    line-height: 1.2;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(26, 26, 26, 0.46);
+  }
+
+  @keyframes floatDrift {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -10px; }
+  }
+
+  @keyframes orbitSpin {
+    from { transform: translate(-50%, -50%) rotate(var(--orbit-base)); }
+    to { transform: translate(-50%, -50%) rotate(calc(var(--orbit-base) + 360deg)); }
+  }
+
+  @keyframes starBlink {
+    0%, 100% { opacity: 0.38; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+
+  @keyframes tipPulse {
+    0%, 100% { transform: translateY(-50%); box-shadow: 5px 5px 0 rgba(26, 26, 26, 0.05); }
+    50% { transform: translateY(calc(-50% - 3px)); box-shadow: 7px 7px 0 rgba(26, 26, 26, 0.08); }
   }
 
   .slide-2 {
@@ -294,17 +555,22 @@
   .board-top h2 {
     font-family: var(--font-display);
     font-size: clamp(1.8rem, 3.5vw, 3.2rem);
-    line-height: 0.94;
-    letter-spacing: -0.02em;
-    max-width: 10ch;
+    line-height: 1.02;
+    letter-spacing: 0;
+    max-width: 12ch;
+    background: linear-gradient(135deg, #1a1a1a 10%, #4059cf 58%, #7b6bd6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 
   .board-top p {
-    margin-top: 0.9rem;
-    max-width: 34rem;
-    color: rgba(26, 26, 26, 0.68);
-    line-height: 1.6;
-    font-size: 0.94rem;
+    margin-top: 0.85rem;
+    max-width: 31rem;
+    color: rgba(26, 26, 26, 0.7);
+    line-height: 1.7;
+    font-size: 0.92rem;
+    font-weight: 500;
   }
 
   .legend {
@@ -430,6 +696,7 @@
   }
 
   .foot-card {
+    flex: 1;
     padding: 0.75rem 1rem;
     border-radius: 1.1rem;
     border: 2px solid var(--outline);
@@ -440,33 +707,64 @@
   }
 
   .detail-panel {
-    padding: 1.6rem;
+    padding: 1.75rem;
     display: grid;
     grid-template-rows: auto auto auto 1fr auto;
-    gap: 1rem;
+    gap: 0.9rem;
     min-height: 0;
+    background:
+      radial-gradient(circle at 90% 8%, rgba(160, 108, 232, 0.16) 0 10%, transparent 24%),
+      radial-gradient(circle at 8% 92%, rgba(200, 217, 78, 0.14) 0 9%, transparent 25%),
+      rgba(255, 255, 255, 0.76);
+  }
+
+  .detail-panel::before {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    right: -118px;
+    top: -90px;
+    border: 2px dashed rgba(26, 26, 26, 0.12);
+    border-radius: 50%;
+    transform: rotate(-18deg);
+  }
+
+  .detail-panel > * {
+    position: relative;
+    z-index: 1;
   }
 
   .detail-header {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 1.2rem;
     align-items: start;
+  }
+
+  .detail-title-stack {
+    display: grid;
+    gap: 0.56rem;
   }
 
   .detail-header h3 {
     font-family: var(--font-display);
-    font-size: clamp(1.7rem, 2.6vw, 2.5rem);
-    line-height: 0.94;
-    letter-spacing: -0.02em;
+    font-size: clamp(2rem, 3vw, 2.75rem);
+    line-height: 1.02;
+    letter-spacing: 0;
   }
 
   .detail-sub {
-    margin-top: 0.4rem;
+    display: inline-flex;
+    width: fit-content;
+    margin-top: 0.08rem;
+    padding: 0.42rem 0.72rem;
+    border: 1.5px solid rgba(26, 26, 26, 0.16);
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.62);
     font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: rgba(26, 26, 26, 0.54);
+    letter-spacing: 0;
+    color: rgba(26, 26, 26, 0.62);
   }
 
   .priority-pill {
@@ -476,9 +774,15 @@
   }
 
   .detail-summary {
+    border: 2px solid rgba(26, 26, 26, 0.16);
+    border-radius: 1.25rem;
+    background:
+      linear-gradient(90deg, rgba(255, 228, 105, 0.34), rgba(255, 255, 255, 0.66) 48%, rgba(183, 225, 247, 0.28));
+    padding: 0.82rem 0.95rem;
     color: rgba(26, 26, 26, 0.74);
-    line-height: 1.7;
+    line-height: 1.62;
     font-size: 0.95rem;
+    font-weight: 600;
   }
 
   .tag-row {
@@ -501,32 +805,73 @@
   .detail-card {
     border: 2px solid var(--outline);
     border-radius: 1.6rem;
-    background: rgba(255, 255, 255, 0.84);
-    padding: 1rem;
+    background: rgba(255, 255, 255, 0.58);
+    padding: 0.78rem;
     display: grid;
-    gap: 0.9rem;
+    gap: 0.72rem;
     min-height: 0;
     overflow: auto;
   }
 
+  .detail-block {
+    padding: 0.95rem 1rem;
+    border: 1.5px solid rgba(26, 26, 26, 0.14);
+    border-radius: 1.1rem;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 4px 4px 0 rgba(26, 26, 26, 0.035);
+  }
+
   .detail-card h4 {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    opacity: 0.58;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.42rem;
+    margin-bottom: 0.45rem;
+    font-family: var(--font-display);
+    font-size: 1.02rem;
+    line-height: 1;
+    letter-spacing: 0;
+    color: rgba(26, 26, 26, 0.86);
+  }
+
+  .detail-card h4::before {
+    content: "";
+    width: 0.6rem;
+    height: 0.6rem;
+    border: 2px solid var(--outline);
+    border-radius: 50%;
+    background: var(--yellow);
+    box-shadow: 2px 2px 0 rgba(26, 26, 26, 0.06);
   }
 
   .detail-card p,
   .detail-card li {
-    font-size: 0.92rem;
-    line-height: 1.65;
+    font-size: 0.9rem;
+    line-height: 1.58;
     color: rgba(26, 26, 26, 0.78);
   }
 
   .detail-card ul {
-    padding-left: 1.1rem;
+    padding-left: 0;
     display: grid;
-    gap: 0.45rem;
+    gap: 0.38rem;
+    list-style: none;
+  }
+
+  .detail-card li {
+    position: relative;
+    padding-left: 1.05rem;
+  }
+
+  .detail-card li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.68em;
+    width: 0.38rem;
+    height: 0.38rem;
+    border-radius: 50%;
+    background: var(--sky);
+    box-shadow: 1px 1px 0 rgba(26, 26, 26, 0.08);
   }
 
   .link-list {
@@ -581,12 +926,12 @@
   }
 
   .note-box {
-    border: 2px solid var(--outline);
-    border-radius: 1.2rem;
-    background: rgba(245, 245, 240, 0.9);
-    padding: 0.95rem 1rem;
+    border: 1.5px dashed rgba(26, 26, 26, 0.22);
+    border-radius: 1rem;
+    background: rgba(255, 248, 210, 0.72);
+    padding: 0.72rem 0.82rem;
     font-size: 0.82rem;
-    line-height: 1.6;
+    line-height: 1.55;
     color: rgba(26, 26, 26, 0.72);
   }
 
@@ -611,9 +956,9 @@
     }
 
     .map-shell {
-      grid-template-columns: 1fr;
-      min-height: auto;
-      padding-bottom: 5rem;
+      grid-template-columns: minmax(0, 1.3fr) minmax(360px, 0.92fr);
+      min-height: calc(100vh - 4rem);
+      padding-bottom: 0;
     }
 
     .map-board {
@@ -625,8 +970,8 @@
     }
 
     .legend {
-      justify-content: start;
-      max-width: none;
+      justify-content: end;
+      max-width: 18rem;
     }
   }
 
@@ -640,16 +985,16 @@
     }
 
     .slide {
-      position: relative;
-      min-height: 100vh;
-      height: auto;
-      padding: 1.2rem 1rem 5rem;
-      opacity: 1;
-      pointer-events: all;
+      position: absolute;
+      min-height: 720px;
+      height: 100%;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .slide:not(.active) {
-      display: none;
+      display: flex;
     }
 
     .map-board {
@@ -658,7 +1003,7 @@
     }
 
     .board-top {
-      flex-direction: column;
+      flex-direction: row;
     }
 
     .map-stage {
@@ -692,23 +1037,40 @@
 
 <div class="presentation">
   <section class="slide slide-1 active" data-slide="1">
-    <div class="deco-pills">
-      <div class="deco-pill pill-coral" style="width:126px;height:56px;top:12%;left:8%;transform:rotate(-12deg);font-size:0.82rem;">Orbit</div>
-      <div class="deco-pill pill-lavender" style="width:166px;height:60px;top:18%;right:11%;transform:rotate(8deg);font-size:0.86rem;">Signal</div>
-      <div class="deco-pill pill-sky" style="width:112px;height:52px;top:72%;left:15%;transform:rotate(6deg);font-size:0.76rem;">Portal</div>
-      <div class="deco-pill pill-lime" style="width:138px;height:56px;top:78%;right:18%;transform:rotate(-8deg);font-size:0.82rem;">Future</div>
-      <div class="deco-pill pill-peach" style="width:88px;height:88px;border-radius:50%;top:14%;left:46%;font-size:0.72rem;">Day 1</div>
-      <div class="deco-pill pill-white" style="width:110px;height:48px;top:66%;right:8%;transform:rotate(15deg);font-size:0.72rem;opacity:0.7;">Guide</div>
-      <div class="deco-pill pill-violet" style="width:92px;height:92px;border-radius:50%;top:76%;left:5%;font-size:0.68rem;">Start</div>
+    <div class="brand-badge">
+      <img class="brand-logo" src="ws_logo.png" alt="Wondershare 万兴科技">
     </div>
-    <div class="title-pill">Onboarding Community</div>
+    <div class="orbit-ring ring-a"></div>
+    <div class="orbit-ring ring-b"></div>
+    <div class="orbit-ring ring-c"></div>
+    <span class="star-trace s1"></span>
+    <span class="star-trace s2"></span>
+    <span class="star-trace s3"></span>
+    <span class="star-trace s4"></span>
+    <span class="star-trace s5"></span>
+    <span class="star-trace s6"></span>
+    <div class="deco-pills">
+      <div class="deco-pill pill-coral" style="width:126px;height:62px;top:11%;left:7%;transform:rotate(-12deg);font-size:0.84rem;">FXD</div>
+      <div class="deco-pill pill-lavender" style="width:176px;height:64px;top:16%;right:9%;transform:rotate(9deg);font-size:0.86rem;">QuickBI</div>
+      <div class="deco-pill pill-sky" style="width:118px;height:58px;top:73%;left:13%;transform:rotate(6deg);font-size:0.78rem;">DF</div>
+      <div class="deco-pill pill-lime" style="width:126px;height:60px;top:78%;right:16%;transform:rotate(-8deg);font-size:0.82rem;">DT</div>
+      <div class="deco-pill pill-peach" style="width:108px;height:108px;border-radius:50%;top:13%;left:43%;font-size:0.78rem;">MX</div>
+      <div class="deco-pill pill-white" style="width:118px;height:52px;top:64%;right:7%;transform:rotate(15deg);font-size:0.74rem;opacity:0.82;">PIC</div>
+      <div class="deco-pill pill-violet" style="width:112px;height:112px;border-radius:50%;top:75%;left:4%;font-size:0.76rem;">ODS</div>
+      <div class="deco-pill pill-mint" style="width:176px;height:60px;top:30%;left:8%;transform:rotate(-16deg);font-size:0.78rem;">Quick Tracking</div>
+      <div class="deco-pill pill-yellow" style="width:138px;height:54px;top:28%;right:19%;transform:rotate(12deg);font-size:0.76rem;">DevOps</div>
+      <div class="deco-pill pill-white" style="width:112px;height:50px;bottom:18%;left:37%;transform:rotate(-10deg);font-size:0.74rem;opacity:0.88;">CDP</div>
+      <div class="deco-pill pill-peach" style="width:118px;height:50px;bottom:24%;right:33%;transform:rotate(10deg);font-size:0.74rem;">FXM</div>
+      <div class="deco-pill pill-mint" style="width:120px;height:54px;top:47%;left:3%;transform:rotate(12deg);font-size:0.74rem;">DTX</div>
+      <div class="deco-pill pill-sky" style="width:136px;height:54px;top:46%;right:4%;transform:rotate(-12deg);font-size:0.74rem;">DataWorks</div>
+      <div class="deco-pill pill-lavender" style="width:112px;height:112px;border-radius:50%;top:58%;left:18%;font-size:0.76rem;">VOC</div>
+    </div>
+    <div class="title-pill">一起去探索数据平台</div>
     <h1 class="main-title">
       数据平台星图
-      <span class="subtitle">新人入职社区文档 · 数据平台介绍地图</span>
+      <span class="subtitle">核心数据平台地图</span>
     </h1>
-    <p class="cover-note">
-      把 Day 1 会遇到的平台看成一张温和但清晰的星球航线图。下一页可以直接点击每个节点，查看介绍，并快捷进入对应平台。
-    </p>
+    <div class="cover-explore"><span class="spark"></span>欢迎进入数据宇宙的起始页，沿着主星与支线轨道，逐步辨认每一座平台星球。</div>
   </section>
 
   <section class="slide slide-2" data-slide="2">
@@ -717,15 +1079,15 @@
         <div class="board-top">
           <div>
             <div class="pill pill-yellow section-pill">Platform Atlas</div>
-            <h2>你的 Day 1 平台航线图</h2>
+            <h2>数据平台航线图</h2>
             <p>
-              中间这张图把平台拆成几颗功能不同的星球。点击任意一个节点，右侧会出现它的定位、适合做什么，以及可以直接进入的平台入口。
+              轻点星球，查看平台属性、适用场景与开通提示；顺着航线进入默认入口，让 Day 1 的权限路径一站站点亮。
             </p>
           </div>
           <div class="legend">
             <span class="legend-chip" style="color:var(--yellow)"><span class="legend-dot"></span>Day 1 优先</span>
             <span class="legend-chip" style="color:var(--sky)"><span class="legend-dot"></span>分析与报表</span>
-            <span class="legend-chip" style="color:var(--peach)"><span class="legend-dot"></span>协同与流程</span>
+            <span class="legend-chip" style="color:var(--peach)"><span class="legend-dot"></span>产研协同</span>
           </div>
         </div>
 
@@ -741,6 +1103,10 @@
           <button class="node pill-shape pill-mint" data-id="quickbi" style="top:54%;left:49%;transform:rotate(8deg);">
             <span class="node-name">QuickBI</span>
             <span class="node-type">BI 建模</span>
+          </button>
+          <button class="node pill-shape pill-lavender" data-id="voc" style="top:34%;left:40%;transform:rotate(5deg);">
+            <span class="node-name">VOC</span>
+            <span class="node-type">用户声音</span>
           </button>
           <button class="node circle pill-lime" data-id="dataworks" style="top:38%;left:18%;">
             <span class="node-name">DataWorks</span>
@@ -769,14 +1135,15 @@
         </div>
 
         <div class="map-footer">
-          <div class="foot-card">建议先从 ODS、Quick Tracking、蓝鲸 DevOps 这三颗“主星”开始看，它们最接近新人第一周的真实高频场景。</div>
-          <div class="foot-card">如果你所属岗位更偏研发或投放，DataWorks、GitLab、Adjust 这几颗星球会更早变成主路径。</div>
+          <div class="foot-card">产研日常优先关注 ODS、蓝鲸 DevOps、QuickBI：它们覆盖看板查看、流程协同与自助分析。</div>
+          <div class="foot-card">涉及数仓开发或代码协作时，再按需进入 DataWorks、GitLab 等研发向平台。</div>
+          <div class="foot-card">VOC、CDP、Adjust 更偏岗位场景，按职责、业务领域和实际使用边界申请。</div>
         </div>
       </div>
 
       <aside class="detail-panel">
         <div class="detail-header">
-          <div>
+          <div class="detail-title-stack">
             <div class="pill pill-lavender section-pill" id="detailCategory">报表中心</div>
             <h3 id="detailName">ODS</h3>
             <div class="detail-sub" id="detailType">核心经营看板入口</div>
@@ -791,31 +1158,23 @@
         <div class="tag-row" id="detailTags"></div>
 
         <div class="detail-card">
-          <div>
+          <div class="detail-block">
             <h4>平台介绍</h4>
             <p id="detailDescription"></p>
           </div>
 
-          <div>
-            <h4>适合做什么</h4>
+          <div class="detail-block">
+            <h4>适用场景</h4>
             <ul id="detailUses"></ul>
           </div>
 
-          <div>
-            <h4>平台入口</h4>
-            <div class="link-list" id="detailLinks"></div>
-          </div>
-
-          <div>
+          <div class="detail-block">
             <h4>申请提示</h4>
             <div class="note-box" id="detailNote"></div>
           </div>
         </div>
 
-        <div class="detail-actions">
-          <a class="pill pill-yellow" id="primaryAction" href="#" target="_blank" rel="noreferrer noopener">快捷进入平台</a>
-          <a class="pill pill-white" id="secondaryAction" href="#" target="_blank" rel="noreferrer noopener">打开当前默认入口</a>
-        </div>
+        <div class="detail-actions" id="detailActions"></div>
       </aside>
     </div>
   </section>
@@ -827,7 +1186,8 @@
 </div>
 
 <div class="slide-counter"><span id="current">01</span> / 02</div>
-<div class="nav-hint">Use arrow keys to navigate</div>
+<div class="nav-hint">方向键切换页面</div>
+<div class="page-turn-tip">下一页 <span style="font-size:0.9rem;opacity:0.72;">↘</span></div>
 
 <script>
   const slides = document.querySelectorAll(".slide");
@@ -897,15 +1257,15 @@
       type: "核心经营看板入口",
       priority: "Day 1 优先",
       priorityClass: "pill-yellow",
-      summary: "公司经营数据的主入口之一，日常管理和运营看数几乎都会从这里开始。",
-      description: "ODS 是公司经营报表中心，承载了大量核心数据看板，同时具备监控和订阅能力。对于需要日常看数的新同学，它通常是最值得先打开的一颗主星。",
+      summary: "公司经营报表中心，承载核心数据看板，并提供监控、订阅等能力。",
+      description: "ODS 是经营报表与核心看板的集中入口，适合用于日常指标查看、业务监控和经营数据订阅。",
       tags: ["报表中心", "经营指标", "高频入口"],
       uses: [
         "查看核心经营数据和看板",
         "跟踪日常运营表现",
         "订阅常用报表或监控视图"
       ],
-      note: "建议先按你负责的业务范围申请，不需要一开始就开很大的可见范围。对于产品和数据同学，它一般都属于第一批权限。",
+      note: "建议按负责业务范围申请，先覆盖当前岗位需要查看的看板与数据域。",
       links: [
         { label: "ODS 主站", href: "https://new-ods.300624.cn/hope/index" }
       ]
@@ -916,15 +1276,15 @@
       type: "用户行为路径观察站",
       priority: "Day 1 优先",
       priorityClass: "pill-yellow",
-      summary: "更适合回答用户做了什么、路径走到了哪里，以及行为变化背后发生了什么。",
-      description: "Quick Tracking 是第三方数据分析平台服务，支持用户行为深度分析，具备漏斗、留存、画像和 A/B 测试相关能力。它更像一颗行为观察星，帮你看到用户轨迹本身。",
+      summary: "用户行为分析平台，支持行为路径、漏斗、留存、画像和 A/B 测试相关分析。",
+      description: "Quick Tracking 用于用户行为数据分析，适合查看事件表现、路径转化和产品功能使用情况。",
       tags: ["行为分析", "漏斗", "A/B 测试"],
       uses: [
         "查看用户行为路径和关键转化漏斗",
         "分析留存、活跃和关键事件表现",
         "配合产品迭代或运营活动做效果观察"
       ],
-      note: "如果你做产品分析、运营分析或埋点回看，这个平台几乎一定会很快变成高频工具。它和 ODS 的差别在于，ODS 更偏结果看板，Tracking 更偏行为过程。",
+      note: "使用前建议确认访问环境。美西与深圳环境入口不同，按实际业务环境进入。",
       links: [
         { label: "美西环境", href: "https://quicktracking.300624.com:8443/home" },
         { label: "深圳环境", href: "https://quicktracking.300624.cn:8443/home" }
@@ -936,17 +1296,36 @@
       type: "自助分析工作台",
       priority: "一周内补齐",
       priorityClass: "pill-sky",
-      summary: "适合有一定数据基础的同学，用来搭自己的报表、模型和分析视图。",
-      description: "QuickBI 支持自助数据集成、建模和报表开发。它比 ODS 更灵活，也更偏分析产出和自助搭建，适合希望进一步自己做分析看板的人。",
+      summary: "智能分析 BI 平台，支持自助数据集成、建模和报表/看板开发。",
+      description: "QuickBI 面向具备一定数据基础的使用者，适合在已有数据源基础上进行自助分析、报表制作和看板搭建。",
       tags: ["BI", "建模", "看板开发"],
       uses: [
         "搭建自助分析报表",
         "开发自己的数据看板",
         "基于已有数据源做轻量建模"
       ],
-      note: "如果你目前只是先看业务数据，ODS 会更早成为主入口。等需要做自定义分析和看板时，QuickBI 的价值就会很明显。",
+      note: "如需新建数据集、模型或看板，建议同步确认数据源权限和看板空间权限。",
       links: [
         { label: "QuickBI 入口", href: "https://qbi.300624.cn/view/commonly" }
+      ]
+    },
+    voc: {
+      name: "VOC",
+      category: "用户声音平台",
+      type: "用户反馈闭环工作台",
+      priority: "按岗申请",
+      priorityClass: "pill-lavender",
+      summary: "综合性用户反馈管理系统，已接入 Zendesk、企点、NPS、兔小巢等 20+ 主要反馈渠道。",
+      description: "VOC（Voice of Customer）用于统一收集、分析并推动解决用户需求和问题，覆盖用户声音采集、深度分析、业务响应与产品优化实施追踪的闭环流程。",
+      tags: ["用户反馈", "声音分析", "闭环追踪"],
+      uses: [
+        "查看多渠道用户反馈和问题线索",
+        "分析用户需求、问题类型和反馈趋势",
+        "跟踪业务响应与产品优化闭环"
+      ],
+      note: "主要面向用户声音专员等岗位，按业务领域申请；非核心必申请平台，确有用户反馈处理或分析职责时开通。",
+      links: [
+        { label: "VOC 入口", href: "https://voc.300624.cn/uvm/" }
       ]
     },
     dataworks: {
@@ -955,15 +1334,15 @@
       type: "数据底层能力主战场",
       priority: "一周内补齐",
       priorityClass: "pill-lime",
-      summary: "更接近数仓、开发与治理层，是偏底层能力的平台。",
-      description: "DataWorks 是一站式数据开发和治理平台，主要面向数据研发工程师以及数据分析人员。对于偏数仓、任务、表权限和数据治理的工作，它是很核心的一颗工程星球。",
+      summary: "一站式数据开发和治理平台，主要用于数仓开发、任务编排和数据治理。",
+      description: "DataWorks 面向数据开发与治理场景，适合处理数仓任务、表权限、任务调度和数据链路相关工作。",
       tags: ["数仓", "数据开发", "治理"],
       uses: [
         "处理数仓相关任务和表权限",
         "进行开发编排和治理动作",
         "接近底层数据链路做更深入操作"
       ],
-      note: "如果你的岗位偏产品或运营，它未必是首日必开；如果你偏数据研发，这颗星球的重要性会迅速上升。建议先让 Leader 帮你确认需要申请到哪一层。",
+      note: "申请前建议明确项目空间、表权限和任务权限范围，避免权限粒度过大或遗漏关键资源。",
       links: [
         { label: "DataWorks 入口", href: "https://dataworks.data.aliyun.com/us-west-1/" }
       ]
@@ -974,15 +1353,15 @@
       type: "需求任务流转中枢",
       priority: "Day 1 优先",
       priorityClass: "pill-coral",
-      summary: "它不是分析平台，但几乎是新人进入产研协作流程的第一扇门。",
-      description: "蓝鲸 DevOps 支持需求、任务、缺陷从录入到交付的闭环管理。对需要参与需求协同、任务推进和缺陷追踪的新同学来说，这是一颗流程主星。",
+      summary: "产研测协同平台，支持需求、任务、缺陷到交付的闭环管理。",
+      description: "蓝鲸 DevOps 用于产研协作与流程流转，覆盖需求管理、任务推进、缺陷追踪和交付协同。",
       tags: ["研发协同", "任务流", "缺陷管理"],
       uses: [
         "查看和流转需求任务",
         "参与研发协同与项目跟踪",
         "跟踪缺陷与交付节奏"
       ],
-      note: "虽然它不直接提供业务分析结果，但它往往是你进入日常协作节奏最早用到的平台之一，所以值得跟 ODS 一起放进首批关注清单。",
+      note: "适用于参与需求、任务或缺陷流转的同学，申请时可按项目或团队空间确认权限范围。",
       links: [
         { label: "蓝鲸 DevOps", href: "https://devops.300624.cn/" }
       ]
@@ -993,15 +1372,15 @@
       type: "产品蓝图与流程管理",
       priority: "一周内补齐",
       priorityClass: "pill-peach",
-      summary: "更偏产品规划和流程管理，对产品角色尤其重要。",
-      description: "PSS 对产品规划从制定到落地进行全生命周期管理。如果你属于产品条线，这颗星球通常很快就会进入主路径；其他角色则视参与深度决定是否优先申请。",
+      summary: "产品规划管理系统，用于产品规划从制定到落地的全生命周期管理。",
+      description: "PSS 覆盖产品规划、流程跟进和落地管理，适合承接产品规划相关的信息维护与流程协同。",
       tags: ["产品规划", "流程管理", "产品向"],
       uses: [
         "查看产品规划与流程状态",
         "追踪规划落地过程",
         "承接产品角色的日常管理工作"
       ],
-      note: "对产品角色，这个平台通常值得较早开通。若你不是产品条线，不必为了看起来齐全而提前申请。",
+      note: "如需参与产品规划或流程维护，可按负责产品线与业务范围申请。",
       links: [
         { label: "PSS 入口", href: "https://pss.300624.cn/home" }
       ]
@@ -1012,15 +1391,15 @@
       type: "研发协作基础设施",
       priority: "按需申请",
       priorityClass: "pill-violet",
-      summary: "开发、测试开发和部分需要查看代码或脚本的同学会更频繁地用到它。",
-      description: "GitLab 是公司主要的代码存储和管理工具。对于研发相关岗位，它是基础设施；对于产品或数据岗位，则更多取决于你是否需要查看埋点、脚本、文档或配置仓库。",
+      summary: "公司主要代码存储和管理工具，用于代码仓库、分支和协作开发。",
+      description: "GitLab 用于代码仓库管理和研发协作，适合涉及代码查看、开发协作、脚本维护或仓库文档访问的场景。",
       tags: ["代码仓库", "研发基础设施", "按需"],
       uses: [
         "查看代码仓库和分支协作",
         "参与研发相关文档或脚本查看",
         "配合开发流程理解上线与改动"
       ],
-      note: "它是否在第一天就必须，和岗位关系很大。正式版如果你愿意，我们后面可以继续补充哪些仓库是公共可见、哪些需要额外权限。",
+      note: "申请前建议明确需要访问的项目组或仓库名称，避免只开通登录权限但缺少具体仓库权限。",
       links: [
         { label: "GitLab 入口", href: "http://rdgit.300624.cn/users/sign_in" }
       ]
@@ -1031,15 +1410,15 @@
       type: "人群圈选与标签星球",
       priority: "按需申请",
       priorityClass: "pill-lavender",
-      summary: "当你的工作开始涉及用户分层、人群包或活动运营时，它会变得很有价值。",
-      description: "CDP 支持基于用户标签构建人群，用于日常运营活动。它和 Quick Tracking 不完全一样，Tracking 更偏行为过程，CDP 更偏画像、标签和人群使用。",
+      summary: "用户画像平台，支持基于用户标签构建人群，用于日常运营活动。",
+      description: "CDP 用于用户标签、人群圈选和画像能力使用，适合需要基于标签进行用户分层或人群管理的场景。",
       tags: ["画像", "标签", "运营人群"],
       uses: [
         "做用户分层和人群圈选",
         "支撑活动运营和标签策略",
         "辅助理解用户画像能力"
       ],
-      note: "如果当前岗位不涉及精细化运营，可以先不把它放进第一批权限；如果你很快要做人群或标签策略，这颗星球会很快亮起来。",
+      note: "涉及用户标签和人群使用时，应按业务职责申请对应范围，并确认标签使用边界。",
       links: [
         { label: "CDP 入口", href: "https://workspace.300624.cn/cdp/" }
       ]
@@ -1050,15 +1429,15 @@
       type: "投放与效果分析星球",
       priority: "按需申请",
       priorityClass: "pill-white",
-      summary: "更偏投放、归因与营销效果分析，不一定是所有新人都第一时间要上的平台。",
-      description: "Adjust 专注于移动应用营销数据分析，提供归因追踪和效果分析等能力。对增长、投放、市场相关同学来说，它是很关键的一颗营销星。",
+      summary: "移动应用营销数据分析平台，提供归因追踪和效果分析能力。",
+      description: "Adjust 用于移动应用归因追踪与营销效果分析，适合需要查看渠道效果、归因数据和相关报表的场景。",
       tags: ["营销分析", "归因", "投放"],
       uses: [
         "查看营销归因与投放效果",
         "辅助评估广告和增长表现",
         "服务市场与增长相关分析需求"
       ],
-      note: "如果你的职责不涉及投放和归因，可以先不着急申请。它更适合作为按需平台放在地图里，提醒相关角色后续补齐。",
+      note: "该平台建议按实际业务需要申请，申请前确认是否涉及归因数据查看或相关报表分析。",
       links: [
         { label: "Adjust 入口", href: "https://suite.adjust.com/datascape/overview" }
       ]
@@ -1073,10 +1452,8 @@
   const detailDescription = document.getElementById("detailDescription");
   const detailTags = document.getElementById("detailTags");
   const detailUses = document.getElementById("detailUses");
-  const detailLinks = document.getElementById("detailLinks");
   const detailNote = document.getElementById("detailNote");
-  const primaryAction = document.getElementById("primaryAction");
-  const secondaryAction = document.getElementById("secondaryAction");
+  const detailActions = document.getElementById("detailActions");
   const nodes = document.querySelectorAll(".node");
 
   function renderPlatform(id) {
@@ -1103,23 +1480,11 @@
 
     detailUses.innerHTML = item.uses.map((use) => `<li>${use}</li>`).join("");
 
-    detailLinks.innerHTML = item.links.map((link, index) => {
-      const actionClass = index % 2 === 0 ? "pill-yellow" : "pill-white";
-      return `
-        <div class="link-item">
-          <div>
-            <strong>${link.label}</strong>
-            <span>${link.href}</span>
-          </div>
-          <a class="pill ${actionClass} link-action" href="${link.href}" target="_blank" rel="noreferrer noopener">进入</a>
-        </div>
-      `;
+    detailActions.innerHTML = item.links.map((link, index) => {
+      const actionClass = index === 0 ? "pill-yellow" : "pill-white";
+      const label = item.links.length > 1 ? `进入${link.label}` : "快捷进入默认入口";
+      return `<a class="pill ${actionClass}" href="${link.href}" target="_blank" rel="noreferrer noopener">${label}</a>`;
     }).join("");
-
-    primaryAction.href = item.links[0].href;
-    secondaryAction.href = item.links[0].href;
-    primaryAction.textContent = item.links.length > 1 ? "快捷进入默认入口" : "快捷进入平台";
-    secondaryAction.textContent = item.links.length > 1 ? "查看其他环境入口" : "打开当前默认入口";
   }
 
   nodes.forEach((node) => {
